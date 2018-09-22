@@ -1,7 +1,7 @@
 ### Project files for:
 blockchain.py \
 A simple python blockchain application for education & research \
-Using Flash 1.0.2 & requests 2.19.1
+Using Flask 1.0.2 & requests 2.19.1
 __________________________________
 ### Code along project using:
 
