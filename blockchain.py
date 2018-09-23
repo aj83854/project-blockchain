@@ -1,6 +1,8 @@
 import hashlib
 import json
+
 from time import time
+from uuid import uuid4
 
 
 class Blockchain(object):
@@ -20,6 +22,7 @@ class Blockchain(object):
         :param previous_hash: (Optional) <str> Hash of the previous block.
         :return: <dict> New Block
         """
+
         block = {
             'index': len(self.chain) + 1,
             'timestamp': time(),
@@ -51,6 +54,24 @@ class Blockchain(object):
 
         return self.last_block['index'] + 1
 
+    def proof_of_work(self, last_proof):
+        """
+        Simple Proof-of-Work (PoW) Algorithm:
+
+        Let p be the previous proof, and p1 is the new proof.
+        Find a number, p1, that when hashed with the previous
+        block's solution, p, a hash with 4 leading 0's is produced.
+
+        :param last_proof: <int>
+        :return: <int>
+        """
+
+        proof = 0
+        while self.valid_proof(last_proof, proof) is False:
+            proof += 1
+
+        return proof
+
     @property
     def last_block(self):
         return self.chain[-1]
@@ -69,3 +90,18 @@ class Blockchain(object):
 
         block_string = json.dumps(block, sort_keys=True).encode()
         return hashlib.sha256(block_string).hexdigest()
+
+    @staticmethod
+    def valid_proof(last_proof, proof):
+        """
+        Validates the Proof, as in
+        'does hash(last_proof, proof) contain 4 leading 0's?'
+
+        :param last_proof: <int> Previous Proof
+        :param proof: <int> Current Proof
+        :return: <bool> True if correct, False if not.
+        """
+
+        guess = f'{last_proof}{proof}'.encode()
+        guess_hash = hashlib.sha256(guess).hexdigest()
+        return guess_hash[:4] == '0000'
