@@ -22,7 +22,8 @@ class Blockchain(object):
         """
         block = {
             'index': len(self.chain) + 1,
-            'timestamp': self.current_transactions,
+            'timestamp': time(),
+            'transactions': self.current_transactions,
             'proof': proof,
             'previous_hash': previous_hash or self.hash(self.chain[-1]),
         }
@@ -59,12 +60,11 @@ class Blockchain(object):
         """
         Creates a SHA-256 hash of a Block.
 
-        We ensure that the dictionary is ordered using 'sort_keys';
-        otherwise, we'll end up with inconsistent hashes.
+        Note: We ensure that the dictionary is ordered using
+        'sort_keys', so we don't end up with inconsistent hashes.
 
         :param block: <dict> Block
         :return: <str>
-
         """
 
         block_string = json.dumps(block, sort_keys=True).encode()
