@@ -5,7 +5,7 @@ Using Flask 1.0.2 & requests 2.19.1
 __________________________________
 ### Code along project using:
 
-**Learn Blockchains by Building One**
+**Learn Blockchains by Building One** \
 _by Daniel van Flymen, 2017_
 
 https://medium.com/p/117428612f46
