@@ -9,3 +9,5 @@ __________________________________
 
 https://hackernoon.com/learn-blockchains-by-building-one-117428612f46
 ___________________________________
+
+Remember to use an HTML client (httpie, cURL, Postman, etc) to interact with the Flask API.
