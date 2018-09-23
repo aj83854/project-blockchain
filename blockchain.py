@@ -58,24 +58,6 @@ class Blockchain(object):
 
         return self.last_block['index'] + 1
 
-    def proof_of_work(self, last_proof):
-        """
-        Simple Proof-of-Work (PoW) Algorithm:
-
-        Let p be the previous proof, and p1 is the new proof.
-        Find a number, p1, that when hashed with the previous
-        block's solution, p, a hash with 4 leading 0's is produced.
-
-        :param last_proof: <int>
-        :return: <int>
-        """
-
-        proof = 0
-        while self.valid_proof(last_proof, proof) is False:
-            proof += 1
-
-        return proof
-
     def register_node(self, address):
         """
         Add a new node to the list of nodes.
@@ -176,6 +158,27 @@ class Blockchain(object):
 
         block_string = json.dumps(block, sort_keys=True).encode()
         return hashlib.sha256(block_string).hexdigest()
+
+    def proof_of_work(self, last_block):
+        """
+        Simple Proof-of-Work (PoW) Algorithm:
+
+        Let p be the previous proof, and p1 is the new proof.
+        Find a number, p1, that when hashed with the previous
+        block's solution, p, a hash with 4 leading 0's is produced.
+
+        :param last_block: <dict> Last block.
+        :return: <int>
+        """
+
+        last_proof = last_block['proof']
+        last_hash = self.hash(last_block)
+
+        proof = 0
+        while self.valid_proof(last_proof, proof, last_hash) is False:
+            proof += 1
+
+        return proof
 
     @staticmethod
     def valid_proof(last_proof, proof):
