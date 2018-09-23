@@ -1,10 +1,10 @@
 import hashlib
 import json
-import requests
-from urllib.parse import urlparse
 from time import time
+from urllib.parse import urlparse
 from uuid import uuid4
 
+import requests
 from flask import Flask, jsonify, request
 
 
@@ -15,7 +15,7 @@ class Blockchain(object):
         self.chain = []
         self.nodes = set()
 
-        # Creates a new genesis block
+        # Creates the genesis block
         self.new_block(previous_hash=1, proof=100)
 
     def new_block(self, proof, previous_hash=None):
@@ -85,7 +85,13 @@ class Blockchain(object):
         """
 
         parsed_url = urlparse(address)
-        self.nodes.add(parsed_url.netloc)
+        if parsed_url.netloc:
+            self.nodes.add(parsed_url.netloc)
+        elif parsed_url.path:
+            # Accepts FQDN URLs
+            self.nodes.add(parsed_url.path)
+        else:
+            raise ValueError('Invalid URL')
 
     def valid_chain(self, chain):
         """
