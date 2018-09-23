@@ -6,6 +6,7 @@ __________________________________
 ### Code along project using:
 
 **Learn Blockchains by Building One**
+_by Daniel van Flymen, 2017_
 
 https://medium.com/p/117428612f46
 ___________________________________
