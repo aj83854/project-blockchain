@@ -247,7 +247,7 @@ def register_nodes():
         blockchain.register_node(node)
 
     response = {
-        'message': 'New nodes have been added!'
+        'message': 'New nodes have been added!',
         'total_nodes': list(blockchain.nodes),
     }
     return jsonify(response), 201
